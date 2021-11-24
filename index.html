@@ -1,0 +1,62 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>Get Reputation Score</h3>
+    <label>Input your public key:</label>
+    <input type="text" id='id'></input>
+    <button onclick="checkScore()" type="button" id="btn">Check Score </button> <br>
+
+    <p id="para"></p>
+
+    <script>
+
+        // const url = 'http://104.34.230.121:3000/requestValidation'
+
+        // function checkScore() {
+        //     const idNum = parseInt(document.getElementById('id').value)
+
+        //     fetch(url, {
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         method: "POST",
+        //         body: JSON.stringify({ address: idNum }) // idNum is the public key to the blockchain
+        //     })
+        //         .then(res => res.text()) //if returning JSON then do res.json()
+        //         .then(data => {
+        //             console.log(data)
+        //             document.getElementById("para").innerHTML = data
+        //         })
+        //         .catch(error => console.log(error))
+        // }
+
+
+        function checkScore() {
+            const publicKey = document.getElementById('id').value
+            const url = 'http://104.34.230.121:3000/blocks/'+`${publicKey}`
+
+            fetch(url)
+                .then(res => res.text()) //if returning JSON then do res.json()
+                .then(data => {
+                    console.log(data)
+                    if(data > 0)
+                        document.getElementById("para").innerHTML = 
+                        `Your reputation score: ${data}<br> Congratulations!!! You Are Approved!!!`
+                    else
+                        document.getElementById("para").innerHTML = 
+                        `Your reputation score: ${data}<br> Sorry. You didn't qualify.`
+
+                    })
+                .catch(error => console.log(error))
+        }
+    </script>
+</body>
+
+</html>
